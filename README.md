@@ -1,5 +1,8 @@
 Welcome to my Eda of the Titanic datase
 
+Introduction
+------------
+
 In this task I imported the Titanic dataset as a dataframe.
 First I cleaned it then genarated a heat mata of the data.
 I then plotted various graphs to exore the dataset.
