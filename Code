@@ -1,0 +1,85 @@
+import pandas as pd
+import numpy as np
+# for Box-Cox Transformation
+from scipy import stats
+# plotting modules
+import seaborn as sns
+#import missingno
+import warnings # warning filter
+warnings.filterwarnings('ignore') # warnings are ignored
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("titanic.csv")
+
+# Check size and shape of dataset
+print('shape:', df.shape)
+print('size:', df.size )
+
+# Check for missing Values
+print('Missing values:'
+, df.isnull().sum())   
+
+# Change the two missing observations for Embarked to Southampton as most poeople embarked there
+df.Embarked.fillna(df.Embarked.mode()[0], inplace = True)
+
+# As missing cabin data is massive, changed to NA
+df.Cabin = df.Cabin.fillna('NA')
+
+# Replace missing data with mean age
+df['Salutation'] = df.Name.apply(lambda name: name.split(',')[1].split('.')[0].strip())
+grp = df.groupby(['Sex', 'Pclass'])
+grp.Age.apply(lambda x: x.fillna(x.median()))
+df.Age.fillna(df.Age.median, inplace = True)
+
+# check that there are no more missing values
+print('Missing values:'
+, df.isnull().sum())   
+
+# Check for duplicates
+print('Duplicates:'
+, df.duplicated().sum())
+
+f['Sex']=df['Sex'].astype('category').cat.codes  # Convert categorical variables to numeric
+df['Embarked']=df['Embarked'].astype('category').cat.codes # Convert categorical variables to numeric
+
+# head of all columns 
+for col in df.columns:
+    print(df[col].head()) # Check for outliers
+    print('\n')
+df.to_csv('titanic_clean.csv') # Save the cleaned data set
+
+# Plot a heatmap showing the correlation of data
+sns.heatmap(
+   df.corr(numeric_only=True),
+    linewidth=0.5,
+    cmap='seismic',
+    annot=True
+).set_title('Titanic Dataset Correlation Heatmap')
+
+# Plot the data showing frequency of each category
+plt.barh(df['Embarked'].unique(), df['Embarked'].value_counts(), color='lime', edgecolor='black', alpha=0.5) 
+plt.xlabel('Frequency') # Add a label to the x-axis
+plt.ylabel('Category') # Add a label to the y-axis
+plt.title('Frequency of each category') # Add a title to the plot
+plt.show()
+# Plot the data 
+sns.catplot(x='Pclass', y='Survived', hue='Sex', kind='bar', data=df, palette='Set2') 
+plt.show() # Show the plot
+
+# plot the data showing which sex survived  more than the other
+sns.barplot(df, x="Sex", y="Survived")
+
+# Set plot style
+sns.set(style='ticks', color_codes=True)
+
+# Plot passenger age distribution
+age_hist = sns.FacetGrid(df)
+age_hist.map(plt.hist, 'Age', bins=20)
+
+# Compare whether survived or not by age
+age_hist = sns.FacetGrid(df, col='Survived', hue='Survived')
+age_hist.map(plt.hist, 'Age', bins=15)
+
+# Plot the data to see the relation of which sex had the most parents and children
+sns.barplot(x='Sex', y='Parch', data=df, palette='Set2') 
+plt.show() # Show the plot
