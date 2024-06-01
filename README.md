@@ -1,8 +1,8 @@
 Welcome to my Eda of the Titanic datase
+---------------------------------------
 
 Introduction
 ------------
-
 In this task I imported the Titanic dataset as a dataframe.
 First I cleaned it then genarated a heat mata of the data.
 I then plotted various graphs to exore the dataset.
@@ -18,6 +18,7 @@ learning thiS aspect of coding is important because in order to run visulisation
 |        4|     Credits       |
 
 Installation
+------------
 In order to run this programm you need to have pandas, numpy, seaborn and matplotlib installed.
 once installed you need to import them into python do this as followed
 import pandas as pd
@@ -27,6 +28,7 @@ import matplotlib.pyplot as plt
 
 
 Usage
+------
 this code is relatively simple to use but her are some of the graphs i generated
 
 ![image](https://github.com/emmabaker1984/Titanic-EDA-/assets/163059009/d5543371-ab88-485d-9cfa-90bb41b5745c)
@@ -43,5 +45,6 @@ this code is relatively simple to use but her are some of the graphs i generated
 
 
 Credits
+-------
 This project was completed by Emma J Baker
 
